@@ -143,7 +143,7 @@ Collects static files
 Deploys the live web application
 
 Production URL:
-https://neoitek-automated-timesheets.onrender.com
+https://neoitek-systems-automated-timesheets.onrender.com/
 
 Common Commands
 Task	Command
