@@ -1,1 +1,6 @@
-pip freeze > requirements.txt
+Django>=5.0.2,<6.0
+gunicorn
+psycopg2-binary
+whitenoise
+dj-database-url
+python-dotenv
