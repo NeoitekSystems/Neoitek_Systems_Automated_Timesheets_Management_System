@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Dashboard | Neoitek Systems</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ===== Global ===== */
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    display: flex;
+    background-color: #f5f8fb;
+    color: #333;
+  }
+
+  /* ===== Sidebar ===== */
+  .sidebar {
+    width: 260px;
+    background: linear-gradient(180deg, #0d3b6b, #174b8a);
+    color: white;
+    min-height: 100vh;
+    position: fixed;
+    top: 0; left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    box-shadow: 2px 0 15px rgba(0,0,0,0.1);
+    animation: slideIn 0.9s ease;
+  }
+
+  .sidebar img {
+    width: 150px;
+    margin-bottom: 25px;
+  }
+
+  .sidebar a {
+    text-decoration: none;
+    color: white;
+    width: 80%;
+    text-align: left;
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin: 5px 0;
+    display: block;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+
+  .sidebar a:hover {
+    background: rgba(255,255,255,0.15);
+    padding-left: 25px;
+  }
+
+  /* ===== Logout Button ===== */
+  .logout-btn {
+    margin-top: auto;
+    margin-bottom: 25px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid #fff;
+    color: white;
+    border-radius: 30px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+
+  .logout-btn:hover {
+    background: white;
+    color: #0d3b6b;
+    transform: scale(1.05);
+  }
+
+  /* ===== Main Content ===== */
+  .main-content {
+    margin-left: 260px;
+    padding: 30px 40px;
+    flex-grow: 1;
+    animation: fadeIn 1s ease;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  .header h1 {
+    color: #0d3b6b;
+    font-weight: 600;
+  }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 10px 18px;
+    border-radius: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+
+  .profile img {
+    border-radius: 50%;
+  }
+
+  .profile span {
+    margin-left: 10px;
+    font-weight: 500;
+    color: #0d3b6b;
+  }
+
+  /* ===== Cards ===== */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(13, 59, 107, 0.15);
+  }
+
+  .card h3 {
+    color: #0d3b6b;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .card p {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f37021;
+    margin: 0;
+  }
+
+  /* ===== Timesheet Section ===== */
+  .timesheet-form {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  }
+
+  .timesheet-form h2 {
+    color: #0d3b6b;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+  }
+
+  th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+  }
+
+  th {
+    background: #0d3b6b;
+    color: white;
+    font-weight: 600;
+  }
+
+  input[type="text"], input[type="number"] {
+    width: 90%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+  }
+
+  input[type="text"]:focus, input[type="number"]:focus {
+    border-color: #f37021;
+    outline: none;
+  }
+
+  .submit-btn {
+    background-color: #f37021;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(243, 112, 33, 0.25);
+  }
+
+  .submit-btn:hover {
+    background-color: #0d3b6b;
+    transform: scale(1.03);
+  }
+
+  /* ===== Animations ===== */
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  @keyframes slideIn {
+    from {transform: translateX(-100px); opacity: 0;}
+    to {transform: translateX(0); opacity: 1;}
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 900px) {
+    .sidebar {
+      width: 220px;
+    }
+    .main-content {
+      margin-left: 220px;
+      padding: 20px;
+    }
+    .header h1 {
+      font-size: 1.4rem;
+    }
+  }
+</style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <img src="https://neoiteksys.com/wp-content/uploads/2019/10/logo.png" alt="Neoitek Systems Logo">
+    <a href="#">Dashboard</a>
+    <a href="#">My Timesheets</a>
+    <a href="#">Projects</a>
+    <a href="#">Leave Requests</a>
+    <a href="#">Support</a>
+
+    <form action="/login/">
+      <button type="submit" class="logout-btn">Logout</button>
+    </form>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="header">
+      <h1>Employee Dashboard</h1>
+      <div class="profile">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" width="35" height="35" alt="Employee Profile">
+        <span>Welcome, John Doe</span>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards">
+      <div class="card">
+        <h3>Total Hours This Week</h3>
+        <p>42</p>
+      </div>
+      <div class="card">
+        <h3>Pending Approval</h3>
+        <p>6</p>
+      </div>
+      <div class="card">
+        <h3>Approved Hours</h3>
+        <p>36</p>
+      </div>
+      <div class="card">
+        <h3>Projects Assigned</h3>
+        <p>3</p>
+      </div>
+    </div>
+
+    <!-- Timesheet Form -->
+    <div class="timesheet-form">
+      <h2>Submit Weekly Timesheet</h2>
+      <form>
+        <table>
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Project</th>
+              <th>Hours Worked</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Monday</td><td><input type="text" placeholder="Project Name"></td><td><input type="number" placeholder="Hrs"></td><td><input type="text" placeholder="Remarks"></td></tr>
+            <tr><td>Tuesday</td><td><input type="text"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>Wednesday</td><td><input type="text"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>Thursday</td><td><input type="text"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>Friday</td><td><input type="text"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>Saturday</td><td><input type="text"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>Sunday</td><td><input type="text"></td><td><input type="number"></td><td><input type="text"></td></tr>
+          </tbody>
+        </table>
+        <button type="submit" class="submit-btn">Submit Timesheet</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
