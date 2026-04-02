@@ -24,3 +24,4 @@ def hr_dashboard(request):
 def employee_dashboard(request):
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     return render(request, 'employee_dashboard.html', {'days': days})
+
